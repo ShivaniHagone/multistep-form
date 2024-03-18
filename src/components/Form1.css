@@ -1,0 +1,55 @@
+
+
+.fieldset{
+    width: 30px;
+    height:500px;
+    margin-left: 480px;
+    margin-top: 50px;
+    text-align: center;
+    align-self: center;
+    border: 3px solid;
+}
+
+.form{
+    background-color:whitesmoke;
+     margin-top: 15px; 
+    padding-left: 150px;
+    padding-top: 10px;
+    height: 430px;
+    width: fit-content;
+     padding-top: 40px;
+     border: 1px solid black;
+}
+
+.form-block{
+    background-color: white;
+    margin-right:40px ;
+    margin-left : -110px;
+    margin-top: 30px;
+    width: 250px;
+    height: 270px;
+    padding-top: 55px ;
+    font-weight: bolder;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif ;
+}
+
+.button{
+    background-color: rgb(65, 64, 64);
+    color: whitesmoke;
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    margin: 22px;
+
+}
+
+.input{
+    margin-left: 10px;
+    border: 1.5px solid gray;
+    border-radius: 5px;
+
+}
+
+.h4{
+    font-weight: lighter;
+}

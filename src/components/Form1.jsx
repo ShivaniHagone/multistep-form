@@ -9,12 +9,31 @@ function Form1() {
     payment: "",
   });
 
+  const statesWithCities = [
+    {
+      state: "Maharashtra",
+      cities: ["Wardha", "Nashik", "Pune","Nagpur", "Aurangabad"],
+    },
+    {
+      state: "karnataka",
+      cities: ["Bangalore", "Mysore", "Bidar", "Bijapur"],
+    },
+    {
+      state: "Gujarat",
+      cities: ["Ahmedabad", "Surat", "Bhavnagar", "Jamnagar"]
+    }
+  ];
+
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
+
   const [step, setStep] = useState(1);
 
   const [errors, setError] = useState({});
 
   const validStep = () => {
     const { name, email, address, payment } = data;
+    
     let error = {};
 
     switch (step) {
@@ -22,7 +41,7 @@ function Form1() {
         if (!name) {
           error.name = "Name is required";
         }
-        if (!email) {
+        if (!email || !/\S+@\S+\.\S+/.test(email)) {
           error.email = "Valid email is required";
         }
         break;
@@ -30,6 +49,14 @@ function Form1() {
         if (!address) {
           error.address = "Address is required";
         }
+        if (!selectedState) {
+          error.state = 'State is required';
+        }
+        if (!selectedCity) {
+          error.city = 'City is required';
+        }
+        
+
         break;
       case 3:
         if (!payment) {
@@ -47,6 +74,18 @@ function Form1() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
+  };
+
+  const handleStateChange = (e) => {
+    const state = e.target.value;
+    setSelectedState(state);
+    console.log(state);
+    setSelectedCity("");
+  };
+
+  const handleCityChange = (e) => {
+    const city = e.target.value;
+    setSelectedCity(city);
   };
 
   const handleNext = () => {
@@ -83,7 +122,7 @@ function Form1() {
 
             <label>Email :</label>
             <input
-              type="text"
+              type="email"
               name="email"
               value={data.email}
               onChange={handleChange}
@@ -95,7 +134,7 @@ function Form1() {
       case 2:
         return (
           <div>
-            <label>Address:</label>
+            <label>Address :</label>
             <input
               type="text"
               name="address"
@@ -104,6 +143,35 @@ function Form1() {
               className="input"
             />
             <p>{errors.address}</p>
+
+            <label>State : </label>
+            <select
+              name="state"
+              value={selectedState}
+              onChange={handleStateChange}
+              className="select"
+            >
+              <option>Select State</option>
+              {statesWithCities.map((stateObj) => (
+                <option>{stateObj.state}</option>
+              ))}
+            </select><br></br>
+            <p>{errors.state}</p>
+
+            <label>City  :</label>
+            <select
+              name="city"
+              value={selectedCity}
+              onChange={handleCityChange}
+              className="select"
+            >
+              <option>Select City</option>
+              {selectedState &&
+                statesWithCities
+                  .find((stateObj) => stateObj.state === selectedState)
+                  ?.cities.map((city) => (<option>{city}</option>))}
+            </select>
+            <p>{errors.city}</p>
           </div>
         );
       case 3:
@@ -127,6 +195,8 @@ function Form1() {
             <p>Name: {data.name}</p>
             <p>Email: {data.email}</p>
             <p>Address: {data.address}</p>
+            <p>State: {selectedState}</p>
+            <p>City: {selectedCity}</p>
             <p>Payment details: {data.payment}</p>
           </div>
         );
